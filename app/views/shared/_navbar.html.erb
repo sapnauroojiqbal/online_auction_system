@@ -1,0 +1,18 @@
+<nav class="p-4">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col items-center">
+  <% if current_page?(root_path) %>
+    <div class="flex flex-wrap items-center text-base justify-center space-x-7">
+      <%= link_to 'Home', root_path, class: "nav-link #{'underline' if current_page?(root_path)} text-black hover:text-gray-300" %>
+      <%= link_to 'Products', products_path, class: "nav-link #{'underline' if current_page?(products_path)} text-black hover:text-gray-300" %>
+      <%= link_to 'About Us', products_path, class: "nav-link #{'underline' if current_page?(products_path)} text-black hover:text-gray-300" %>
+      <% if user_signed_in? %>
+      <div class="flex font-medium">
+      <div class="flex-auto flex space-x-4">
+        <%= button_to 'Log Out', destroy_user_session_path, method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' %>
+      </div>
+    </div>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+</nav>

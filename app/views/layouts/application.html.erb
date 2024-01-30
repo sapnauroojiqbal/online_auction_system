@@ -6,15 +6,19 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <body class="text-gray-700 bg-white"
+  style="font-family: 'Source Sans Pro', sans-serif">
+  <% if user_signed_in? %>
+    <%= render 'shared/navbar' %>
+  <% end %>
+    <main class="container mx-auto px-5 flex-1">
+  <%= render "layouts/flash" %>
       <%= yield %>
     </main>
   </body>

@@ -7,3 +7,24 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+begin
+  user = User.new
+  user.first_name = 'Admin'
+  user.last_name = 'User'
+  user.email = 'sapna.iqbal@devsinc.com'
+  user.password = 'admin1234'
+  user.password_confirmation = 'ad1234'
+  user.image.attach(io: File.open(Rails.root.join(*%w[app assets images default_profile.png])),
+  filename: 'default_image.png', content_type: 'image/png')
+  user.user_type = :admin
+  user.country = "Pakistan"
+  user.province = "Punjab"
+  user.city = "Lahore"
+  user.street = "1"
+  user.postal_code = "4324"
+  user.phone_number = "0000-0000000"
+  user.save!
+rescue ActiveRecord::RecordInvalid => invalid
+  puts invalid.record.errors.full_messages
+end
