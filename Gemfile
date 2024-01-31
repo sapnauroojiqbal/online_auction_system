@@ -22,6 +22,10 @@ gem "bootsnap", require: false
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "byebug"
+  gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+  gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
 end
 
 group :development do

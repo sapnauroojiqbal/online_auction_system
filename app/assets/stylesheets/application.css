@@ -108,3 +108,10 @@ button:hover,
   padding: 2%;
   animation: gradient-border 3s linear infinite;
 }
+
+.gradient-text {
+  background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 900;
+}

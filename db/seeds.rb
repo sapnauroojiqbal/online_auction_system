@@ -14,16 +14,13 @@ begin
   user.last_name = 'User'
   user.email = 'sapna.iqbal@devsinc.com'
   user.password = 'admin1234'
-  user.password_confirmation = 'ad1234'
-  user.image.attach(io: File.open(Rails.root.join(*%w[app assets images default_profile.png])),
-  filename: 'default_image.png', content_type: 'image/png')
+  user.password_confirmation = 'admin1234'
   user.user_type = :admin
-  user.country = "Pakistan"
-  user.province = "Punjab"
-  user.city = "Lahore"
-  user.street = "1"
-  user.postal_code = "4324"
+  user.address = "Lahore , Pakistan"
+  user.gender = 'male'
   user.phone_number = "0000-0000000"
+  user.avatar.attach(io: File.open(Rails.root.join(*%w[app assets images default_profile.png])),
+  filename: 'default_image.png', content_type: 'image/png')
   user.save!
 rescue ActiveRecord::RecordInvalid => invalid
   puts invalid.record.errors.full_messages
