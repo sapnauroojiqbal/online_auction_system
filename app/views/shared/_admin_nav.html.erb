@@ -1,0 +1,4 @@
+<% if current_user && (current_user.admin? || current_user.super_admin?) %>
+<%= link_to 'Users', users_path, class: "nav-link #{'underline' if current_page?(users_path)} text-gray-900 hover:text-black ml-5" %>
+<%= link_to 'Auctions', products_path, class: "nav-link #{'underline' if current_page?(auctions_path)} text-gray-900 hover:text-black" %>
+<% end %>

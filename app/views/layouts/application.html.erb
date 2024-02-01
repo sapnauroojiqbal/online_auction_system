@@ -14,9 +14,8 @@
 
   <body class="text-gray-700 bg-white"
   style="font-family: 'Source Sans Pro', sans-serif">
-  <% if user_signed_in? %>
     <%= render 'shared/navbar' %>
-  <% end %>
+    <%= render 'shared/design' %>
     <main class="container mx-auto px-5 flex-1">
   <%= render "layouts/flash" %>
       <%= yield %>

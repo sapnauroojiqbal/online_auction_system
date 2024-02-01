@@ -1,0 +1,38 @@
+<br />
+<div class="container">
+  <div class="card">
+    <div class="card-header text-white bg-secondary ">
+      <p>
+        <strong>Product: </strong>
+        <%= @product.name.upcase  %>
+      </p>
+    </div>
+    <div class="card-body text-black bg-light">
+    <% if @product.preview_image.attached? %>
+    <%= image_tag(@product.preview_image, class: 'rounded-md w-64 h-64') %>
+  <% end %>
+    <p>
+    <strong>Description: </strong>
+    <%= @product.description  %>
+  </p>
+      <p>
+        <strong>Minimum bid amount: </strong>
+        <%= @product.minimum_bid_amount %>
+        <br />
+        <strong>Images:</strong>
+        <div class="flex flex-row">
+        <% @product.images.each do |image| %>
+          <div class="row mx-5 w-64 h-64">
+              <%= image_tag(image, class: 'rounded-md w-64 h-64') %>
+              </div>
+          <% end%>
+          </div>
+      </p>
+      <% if current_user && (current_user.id == @product.user_id || current_user.admin? || current_user.super_admin?) %>
+      <%= link_to 'Edit', edit_product_path(@product), class:"btn btn-warning" %>
+      <% end %>
+      <br />
+      <%= link_to 'Back', products_path, class:"btn btn-secondary"  %>
+    </div>
+  </div>
+</div>

@@ -2,28 +2,29 @@ Rails.application.routes.draw do
   devise_for :users
   root 'welcome#index'
   authenticate :user do
+    resources :users, only: [:show, :index, :destroy]
     resources :auctions
+    resources :auctions, except: [:index] do
+      member do
+        patch :approve
+      end
+    end
     resources :bids
-    resources :products
+    resources :products, except: [:index] do
+      member do
+        patch :change_status
+      end
+    end
   end
 
-  namespace :admin do
-    resources :dashboard
+  resources :products, only: [:index]
+  resources :auctions, only: [:index]
+
+  resources :users do
+    member do
+      patch :change_user_role
+      get :add_admin  # Use 'get' to show the form
+      post :create_admin
+    end
   end
-
-  namespace :buyer do
-    resources :dashboard
-  end
-
-  namespace :seller do
-    resources :dashboard
-  end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end

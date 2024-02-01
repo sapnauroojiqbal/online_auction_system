@@ -15,7 +15,7 @@ begin
   user.email = 'sapna.iqbal@devsinc.com'
   user.password = 'admin1234'
   user.password_confirmation = 'admin1234'
-  user.user_type = :admin
+  user.user_type = :super_admin
   user.address = "Lahore , Pakistan"
   user.gender = 'male'
   user.phone_number = "0000-0000000"

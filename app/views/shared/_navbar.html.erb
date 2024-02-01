@@ -1,17 +1,32 @@
 <nav class="p-4">
-  <div class="container mx-auto flex flex-wrap p-5 flex-col items-center">
-  <% if current_page?(root_path) %>
-    <div class="flex flex-wrap items-center text-base justify-center space-x-7">
-      <%= link_to 'Home', root_path, class: "nav-link #{'underline' if current_page?(root_path)} text-black hover:text-gray-300" %>
-      <%= link_to 'Products', products_path, class: "nav-link #{'underline' if current_page?(products_path)} text-black hover:text-gray-300" %>
-      <%= link_to 'About Us', products_path, class: "nav-link #{'underline' if current_page?(products_path)} text-black hover:text-gray-300" %>
+  <div class="container mx-auto flex flex-wrap flex-col items-center">
+  <% if !current_page?(new_user_registration_path) && !current_page?(new_user_session_path) %>
+  <div class="flex flex-wrap items-center text-base justify-center space-x-7">
+  <div class="mb-4">
+  <%= link_to root_path do %>
+    <img src="<%= asset_path('icons-auction-100.png') %>" alt="logo">
+  <% end %>
+</div>
+      <%= link_to 'Home', root_path, class: "nav-link #{'underline' if current_page?(root_path)} text-gray-900 hover:text-black ml-5" %>
+      <%= link_to 'Products', products_path, class: "nav-link #{'underline' if current_page?(products_path)} text-gray-900 hover:text-black" %>
+      <%= render "shared/admin_nav" %>
       <% if user_signed_in? %>
-      <div class="flex font-medium">
-      <div class="flex-auto flex space-x-4">
-        <%= button_to 'Log Out', destroy_user_session_path, method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' %>
+      <%= link_to user_path(current_user), class: "nav-link text-gray-900 hover:text-black" do %>
+      <div class="flex items-center justify-center border-black border-1 shadow-md rounded-full w-14 h-14">
+        <div class="container">
+            <% if current_user.avatar.attached? %>
+              <%= image_tag(current_user.avatar, class: 'rounded-full') %>
+            <% end %>
+            </div>
+            </div>
+            <% end %>
+
+      <div class="flex font-md">
+        <div class="flex-auto flex space-x-4">
+          <%= button_to 'Log Out', destroy_user_session_path, method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' %>
+        </div>
       </div>
-    </div>
-      <% end %>
+    <% end %>
       </div>
     <% end %>
   </div>
