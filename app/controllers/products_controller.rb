@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
     end
 
     def create
-      @product = current_user.products.new(product_params.merge(status: 'approved'))
+      @product = current_user.products.new(product_params.merge(status: 'unapproved'))
       if @product.save
         redirect_to products_path, notice: 'product was successfully created.'
       else
@@ -40,8 +40,11 @@ class ProductsController < ApplicationController
     end
 
     def change_status
-      @product.update(status: params[:status])
-      flash[:success] = 'Status updated successfully.'
+      if @product.update(status: params[:status])
+      redirect_to products_path, notice: 'Status updated successfully.'
+      else
+        flash[:danger] = 'Something went wrong'
+      end
     end
 
     private
