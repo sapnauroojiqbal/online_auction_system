@@ -17,13 +17,11 @@
         </div>
       <% end %>
       <% if current_user && (current_user.admin? || current_user.super_admin?) && product.status == 'unapproved' %>
-      <div class="flex-auto flex space-x-4">
-        <%= form_for(product, url: change_status_product_path(product), method: :patch) do |form| %>
-          <%= select_tag :status, options_for_select([['Approve', 'approved'], ['Reject', 'rejected']], selected: product.status), onchange: 'this.form.submit()', class: 'form-select my-1' %>
-        <% end %>
-      </div>
-    <% end %>
-
+  <div class="flex-auto flex space-x-4">
+    <%= button_to 'Approve', { action: 'change_status', id: product.id, status: 'approved' }, method: :patch, class: 'btn btn-success ml-2', remote: true %>
+    <%= button_to 'Reject', { action: 'change_status', id: product.id, status: 'rejected' }, method: :patch, class: 'btn btn-danger ml-2 btn-reject', remote: true %>
+  </div>
+<% end %>
     </li>
   <% end %>
 </ul>
