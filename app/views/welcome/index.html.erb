@@ -14,46 +14,44 @@
     </div>
   </div>
 </section>
-<h2 class="mb-4 max-w-2xl text-lg font-extrabold leading-none md:text-3xl xl:text-2xl dark:text-white mb-4">Products live for bidding</h2>
-<div class="flex flex-row overflow-auto">
-<% @products.each do |product| %>
-<div class="flex font-sans border border-gray-900 shadow-lg shadow-pink-500/50 rounded-lg overflow-hidden m-4">
-  <div class="flex-none w-56 relative">
-  <%= image_tag(product.preview_image, class:"absolute inset-0 w-full h-full object-cover rounded-lg", loading:"lazy" ) %>
-  </div>
-  <form class="flex-auto p-6">
-    <div class="flex flex-wrap">
-      <h1 class="flex-auto font-md text-slate-900">
-        <%= product.name %>
-      </h1>
-      <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
-        <%= product.minimum_bid_amount %>$
-      </div>
-      <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
-        <%= product.status %>
-      </div>
-    </div>
-    <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
-    </div>
-    <div class="flex space-x-4 mb-5 text-sm font-md">
-      <% if user_signed_in? && !current_user.buyer? %>
-      <div class="flex-auto flex space-x-4 items-center">
-        <%= link_to 'Show', product_path(product), class:"h-10 px-6 font-semibold rounded-full bg-violet-600 text-white text-center" %>
-      </div>
-      <% else %>
-      <div class="flex-auto flex space-x-4">
-        <button class="h-10 px-6 font-semibold rounded-full bg-violet-600 text-white" type="submit">
-          Bid Now
-        </button>
+<h2 class="mb-4 max-w-2xl text-lg font-extrabold leading-none md:text-3xl xl:text-2xl dark:text-white">Products live for bidding</h2>
+<div class="grid-cols-1 sm:grid md:grid-cols-3 ">
+  <% @products.each do |product| %>
+    <div class="mx-3 mt-6 flex flex-col rounded-lg bg-white dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0 shadow-lg">
+      <% if product.preview_image.attached? %>
+      <div class="aspect-w-16 aspect-h-9">
+        <a href="#!">
+          <%= image_tag(product.preview_image, class: 'rounded-t-lg product-image', loading: 'lazy') %>
+        </a>
       </div>
       <% end %>
-
+      <div class="p-6">
+        <h5 class="mb-2 text-xl font-medium leading-tight text-slate-900 dark:text-neutral-50">
+          <%= product.name %>
+        </h5>
+        <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+          <%= product.description %>
+        </p>
+        <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
+          <%= product.minimum_bid_amount %>$
+        </div>
+        <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+          <%= product.status %>
+        </div>
+        <div class="flex space-x-4 mb-5 text-sm font-md">
+          <% if user_signed_in? && !current_user.buyer? %>
+            <div class="flex-auto flex space-x-4 items-center">
+              <%= link_to 'Show', product_path(product), class:"inline-flex justify-center items-center py-3 px-5 m-3 text-base font-md text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md" %>
+            </div>
+          <% else %>
+            <div class="flex-auto flex space-x-4">
+              <button class="inline-flex justify-center items-center py-3 px-5 m-3 text-base font-md text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md" type="submit"  style= 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);'>
+                Bid Now
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-    <p class="text-sm text-slate-500">
-      <%= product.description %>
-    </p>
-  </form>
-</div>
-<% end %>
-</div>
+  <% end %>
 </div>

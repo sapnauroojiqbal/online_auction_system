@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :auctions
     resources :auctions, except: [:index] do
       member do
-        patch :approve
+        patch :change_status
       end
     end
     resources :bids

@@ -5,46 +5,52 @@
 <% end %>
 </div>
 
-<div class="flex flex-row">
-<ul>
+<div class="grid-cols-1 sm:grid md:grid-cols-3 ">
   <% @products.each do |product| %>
-    <li>
-      <% if product.preview_image.attached? %>
-        <div class="flex font-sans border border-gray-900 shadow-lg shadow-pink-500/50 rounded-lg overflow-hidden m-4">
-          <div class="flex-none w-56 relative">
-            <%= image_tag(product.preview_image, class: 'absolute inset-0 w-full h-full object-cover rounded-lg', loading: 'lazy') %>
+  <div
+    class="mx-3 mt-6 flex flex-col rounded-lg bg-white dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0 shadow-lg">
+    <% if product.preview_image.attached? %>
+    <div class="aspect-w-16 aspect-h-9">
+      <a href="#!">
+        <%= image_tag(product.preview_image, class: 'rounded-t-lg product-image', loading: 'lazy') %>
+      </a>
+    </div>
+    <% end %>
+    <div class="p-6">
+      <h5
+        class="mb-2 text-xl font-medium leading-tight text-slate-900 dark:text-neutral-50">
+        <%= product.name %>
+      </h5>
+      <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+        <%= product.description %>
+      </p>
+      <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
+        <%= product.minimum_bid_amount %>$
+      </div>
+      <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+        <%= product.status %>
+      </div>
+      <div class="flex space-x-4 mb-5 text-sm font-md">
+        <% if user_signed_in? && !current_user.buyer? %>
+          <div class="flex-auto flex space-x-4 items-center">
+            <%= link_to 'Show', product_path(product), class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' %>
           </div>
-          <div class="flex-auto p-6">
-            <div class="flex flex-wrap">
-              <h1 class="flex-auto font-md text-slate-900">
-                <%= product.name %>
-              </h1>
-              <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
-                <%= product.minimum_bid_amount %>$
-              </div>
-              <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
-                <%= product.status %>
-              </div>
-            </div>
-            <p class="text-sm text-slate-500">
-              <%= product.description %>
-            </p>
-            <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200"></div>
-            <div class="flex space-x-4 mb-5 text-sm font-md">
-              <% if user_signed_in? && !current_user.buyer? %>
-                <div class="flex-auto flex space-x-4 items-center">
-                  <%= link_to 'Show', product_path(product), class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white text-center' %>
-                </div>
-              <% else %>
-                <div class="flex-auto flex space-x-4">
-                  <%= button_to 'Bid Now', { action: 'bid_now', id: product.id }, method: :post, class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white', remote: true %>
-                </div>
-              <% end %>
-            </div>
+        <% else %>
+          <div class="flex-auto flex space-x-4">
+            <%= button_to 'Bid Now', { action: 'bid_now', id: product.id }, method: :post, class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white', remote: true %>
+          </div>
+        <% end %>
 
-            <% if current_user && (current_user.id == product.user_id || current_user.admin? || current_user.super_admin?) %>
+      </div>
+      <div class="flex space-x-4 mb-5 text-sm font-md">
+      <% if current_user && (current_user.id == product.user_id || current_user.admin? || current_user.super_admin?) %>
+            <div class="flex flex-row justify-between"
             <div class="flex-auto flex space-x-4">
-              <%= button_to 'Delete', product_path(product), method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md',data: { confirm: 'Are you sure?' } %>
+              <%= button_to 'Delete',product_path(product), method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-color: #F2B0FC;',data: { confirm: 'Are you sure?' } %>
+            </div>
+            <div class="flex-auto flex space-x-4">
+              <%= link_to 'Edit', edit_product_path(product), class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);',data: { confirm: 'Are you sure?' } %>
+            </div>
             </div>
           <% end %>
           <% if current_user && (current_user.admin? || current_user.super_admin?) && product.status == 'unapproved' %>
@@ -53,10 +59,8 @@
         <%= button_to 'Reject', { action: 'change_status', id: product.id, status: 'rejected' }, method: :patch, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', remote: true, style: 'background-color: #F2B0FC;' %>
       </div>
     <% end %>
-          </div>
-        </div>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+    </div>
+  </div>
+    <% end %>
+      </div>
 </div>

@@ -1,0 +1,23 @@
+<br />
+<div class="container">
+  <div class="card">
+    <div class="card-header text-white bg-secondary ">
+      <p>
+        <strong>Auction: </strong>
+        <%= @auction.start_time  %>
+      </p>
+    </div>
+    <div class="card-body text-black bg-light">
+      <p>
+        <strong>Minimum bids </strong>
+        <%= @auction.minimum_bids %>
+        <br />
+      </p>
+      <% if current_user && (current_user.admin? || current_user.super_admin?) %>
+      <%= link_to 'Edit', edit_auction_path(@auction), class:"btn btn-warning" %>
+      <% end %>
+      <br />
+      <%= link_to 'Back', auctions_path, class:"btn btn-secondary"  %>
+    </div>
+  </div>
+</div>

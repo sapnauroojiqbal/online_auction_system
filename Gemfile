@@ -18,6 +18,8 @@ gem 'mini_mime'
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 gem "image_processing", "~> 1.2"
+gem "rack-cors"
+gem 'whenever', require: false
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]

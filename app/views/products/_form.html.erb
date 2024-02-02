@@ -33,32 +33,11 @@
 </div>
 </div>
 
-<div class="field">
-  <%= form.label :images, class: "block text-sm leading-6 text-gray-900 font-bold mt-2" %>
-  <div class="mt-2">
-    <div class="relative rounded-full border-2 border-gray-300 focus-within:border-indigo-600 transition duration-300">
-      <label for="images" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full cursor-pointer hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md border-2 border-gray-400">
-        Choose Files
-      </label>
-      <%= form.file_field :images, id: "images", class: "sr-only", multiple: true %>
-    </div>
-  </div>
-</div>
-
-<div class="field">
-  <%= form.label :preview_image, class: "block text-sm leading-6 text-gray-900 font-bold mt-2" %>
-  <div class="mt-2">
-    <div class="relative rounded-full border-2 border-gray-300 focus-within:border-indigo-600 transition duration-300">
-      <label for="preview_image" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full cursor-pointer hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md border-2 border-gray-400">
-        Choose File
-      </label>
-      <%= form.file_field :preview_image, id: "preview_image", class: "sr-only" %>
-    </div>
-  </div>
-</div>
+<%= render "images", form: form, product: @product %>
+<%= render "image_preview", form: form, product: @product %>
 
 
-  <div class="mb-4">
+  <div class="m-4">
     <%= form.submit "Save Product",  class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-full gradient-bg hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);' %>
   </div>
 <% end %>

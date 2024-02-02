@@ -12,7 +12,7 @@ class AuctionsController < ApplicationController
     end
 
     def create
-      @auction = current_user.auctions.new(auction_params.merge(status: 'approved'))
+      @auction = current_user.auctions.new(auction_params.merge(status: 'unapproved'))
       if @auction.save
         redirect_to auctions_path, notice: 'auction was successfully created.'
       else
@@ -40,8 +40,11 @@ class AuctionsController < ApplicationController
     end
 
     def change_status
-      @auction.update(status: params[:status])
-      flash[:success] = 'Status updated successfully.'
+      if @auction.update(status: params[:status])
+      redirect_to auctions_path, notice: 'Status updated successfully.'
+      else
+        flash[:danger] = 'Something went wrong'
+      end
     end
 
     private
@@ -52,6 +55,6 @@ class AuctionsController < ApplicationController
     end
 
     def auction_params
-      params.require(:auction).permit(:)
+      params.require(:auction).permit(:start_time, :end_time, :minimum_bids, :user_id)
     end
 end

@@ -1,0 +1,52 @@
+<% if auction.preview_image.attached? %>
+<div class="flex font-sans border border-gray-900 shadow-lg shadow-pink-500/50 rounded-lg overflow-hidden m-4">
+  <div class="flex-none w-56 relative">
+    <%= image_tag(auction.preview_image, class: 'absolute inset-0 w-full h-full object-cover rounded-lg', loading: 'lazy') %>
+  </div>
+  <div class="flex-auto p-6">
+    <div class="flex flex-wrap">
+      <h1 class="flex-auto font-md text-slate-900">
+        <%= auction.name %>
+      </h1>
+      <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
+        <%= auction.minimum_bid_amount %>$
+      </div>
+      <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+        <%= auction.status %>
+      </div>
+    </div>
+    <p class="text-sm text-slate-500">
+      <%= auction.description %>
+    </p>
+    <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200"></div>
+    <div class="flex space-x-4 mb-5 text-sm font-md">
+      <% if user_signed_in? && !current_user.buyer? %>
+        <div class="flex-auto flex space-x-4 items-center">
+          <%= link_to 'Show', auction_path(auction), class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white text-center' %>
+        </div>
+      <% else %>
+        <div class="flex-auto flex space-x-4">
+          <%= button_to 'Bid Now', { action: 'bid_now', id: auction.id }, method: :post, class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white', remote: true %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if current_user && (current_user.id == auction.user_id || current_user.admin? || current_user.super_admin?) %>
+    <div class="flex flex-row justify-between"
+    <div class="flex-auto flex space-x-4">
+      <%= button_to 'Delete',auction_path(auction), method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md',data: { confirm: 'Are you sure?' } %>
+    </div>
+    <div class="flex-auto flex space-x-4">
+      <%= link_to 'Edit', edit_auction_path(auction), class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);',data: { confirm: 'Are you sure?' } %>
+    </div>
+    </div>
+  <% end %>
+  <% if current_user && (current_user.admin? || current_user.super_admin?) && auction.status == 'unapproved' %>
+<div class="flex-auto flex space-x-4 mt-2">
+<%= button_to 'Approve', { action: 'change_status', id: auction.id, status: 'approved' }, method: :patch, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', remote: true, style: 'background-color: #86E5E5;' %>
+<%= button_to 'Reject', { action: 'change_status', id: auction.id, status: 'rejected' }, method: :patch, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', remote: true, style: 'background-color: #F2B0FC;' %>
+</div>
+<% end %>
+  </div>
+</div>
+<% end %>

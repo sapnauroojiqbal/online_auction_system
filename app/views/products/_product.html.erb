@@ -1,36 +1,52 @@
-<% if images.present? %>
-  <div id="default-carousel" class="relative w-full" data-carousel="slide">
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-      <% images.each_with_index do |image, index| %>
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-        <%= image_tag(image, class: 'absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2') %>
+<% if product.preview_image.attached? %>
+<div class="flex font-sans border border-gray-900 shadow-lg shadow-pink-500/50 rounded-lg overflow-hidden m-4">
+  <div class="flex-none w-56 relative">
+    <%= image_tag(product.preview_image, class: 'absolute inset-0 w-full h-full object-cover rounded-lg', loading: 'lazy') %>
+  </div>
+  <div class="flex-auto p-6">
+    <div class="flex flex-wrap">
+      <h1 class="flex-auto font-md text-slate-900">
+        <%= product.name %>
+      </h1>
+      <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
+        <%= product.minimum_bid_amount %>$
+      </div>
+      <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+        <%= product.status %>
+      </div>
+    </div>
+    <p class="text-sm text-slate-500">
+      <%= product.description %>
+    </p>
+    <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200"></div>
+    <div class="flex space-x-4 mb-5 text-sm font-md">
+      <% if user_signed_in? && !current_user.buyer? %>
+        <div class="flex-auto flex space-x-4 items-center">
+          <%= link_to 'Show', product_path(product), class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white text-center' %>
+        </div>
+      <% else %>
+        <div class="flex-auto flex space-x-4">
+          <%= button_to 'Bid Now', { action: 'bid_now', id: product.id }, method: :post, class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white', remote: true %>
         </div>
       <% end %>
     </div>
 
-    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-      <% images.each_with_index do |image, index| %>
-        <button type="button" class="w-3 h-3 rounded-full <%= index.zero? ? 'bg-white' : 'bg-gray-300' %>" aria-current="<%= index.zero? %>" aria-label="Slide <%= index + 1 %>" data-carousel-slide-to="<%= index %>"></button>
-      <% end %>
+    <% if current_user && (current_user.id == product.user_id || current_user.admin? || current_user.super_admin?) %>
+    <div class="flex flex-row justify-between"
+    <div class="flex-auto flex space-x-4">
+      <%= button_to 'Delete',product_path(product), method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md',data: { confirm: 'Are you sure?' } %>
     </div>
-
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
+    <div class="flex-auto flex space-x-4">
+      <%= link_to 'Edit', edit_product_path(product), class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);',data: { confirm: 'Are you sure?' } %>
+    </div>
+    </div>
+  <% end %>
+  <% if current_user && (current_user.admin? || current_user.super_admin?) && product.status == 'unapproved' %>
+<div class="flex-auto flex space-x-4 mt-2">
+<%= button_to 'Approve', { action: 'change_status', id: product.id, status: 'approved' }, method: :patch, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', remote: true, style: 'background-color: #86E5E5;' %>
+<%= button_to 'Reject', { action: 'change_status', id: product.id, status: 'rejected' }, method: :patch, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', remote: true, style: 'background-color: #F2B0FC;' %>
 </div>
-<%= images.count %>
 <% end %>
-
+  </div>
+</div>
+<% end %>

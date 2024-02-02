@@ -108,3 +108,15 @@ button:hover,
   padding: 2%;
   animation: gradient-border 3s linear infinite;
 }
+
+.product-image {
+  max-height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+[data-controller="auction-timer"] {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
