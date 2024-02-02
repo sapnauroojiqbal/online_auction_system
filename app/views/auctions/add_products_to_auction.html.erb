@@ -1,0 +1,12 @@
+<!-- app/views/auctions/add_products_to_auction.html.erb -->
+
+<div class="flex flex-col">
+  <h1>Add Products to Auction</h1>
+
+  <%= form_tag(assign_products_to_auction_auction_path(@auction), method: :post) do %>
+    <label for="product_ids">Select Products:</label>
+    <%= collection_check_boxes(:product, :product_ids, @available_products, :id, :name) %>
+
+    <%= submit_tag "Add Selected Products", class: 'btn btn-primary' %>
+  <% end %>
+</div>

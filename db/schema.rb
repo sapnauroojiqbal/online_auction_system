@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_01_072349) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_02_150213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,10 +66,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_072349) do
   create_table "bids", force: :cascade do |t|
     t.decimal "amount"
     t.bigint "user_id", null: false
-    t.bigint "auction_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["auction_id"], name: "index_bids_on_auction_id"
+    t.bigint "product_id", null: false
+    t.index ["product_id"], name: "index_bids_on_product_id"
     t.index ["user_id"], name: "index_bids_on_user_id"
   end
 
@@ -82,6 +82,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_072349) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "sold_to_id"
+    t.bigint "auction_id"
     t.index ["sold_to_id"], name: "index_products_on_sold_to_id"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
@@ -124,7 +125,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_072349) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "auctions", "users"
-  add_foreign_key "bids", "auctions"
+  add_foreign_key "bids", "products"
   add_foreign_key "bids", "users"
   add_foreign_key "products", "users"
   add_foreign_key "products", "users", column: "sold_to_id"

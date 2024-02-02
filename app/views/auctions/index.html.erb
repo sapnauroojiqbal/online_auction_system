@@ -12,38 +12,26 @@
         <div class="flex font-sans border border-gray-900 shadow-lg shadow-pink-500/50 rounded-lg overflow-hidden m-4">
           <div class="flex-auto p-6">
             <div class="flex flex-wrap">
-              <h1 class="flex-auto font-md text-slate-900">
-                <%= auction.start_time %>
-              </h1>
+                <%= render "countdown", auction: auction %>
               <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
-                <%= auction.end_time %>
-              </div>
-              <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
-                <%= auction.minimum_bids %>
+                <%= auction.start_time %> - <%= auction.end_time %>
               </div>
               <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
                 <%= auction.status %>
               </div>
             </div>
 
-            <% seconds_until_target_time = auction.end_time.to_i - Time.now.to_i %>
-            <%= content_tag(:h1, "", data: { controller: "auction_timer", auction_timer_target: "countdown", seconds_until_end_value: seconds_until_target_time }) %>
-
             <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200"></div>
             <div class="flex space-x-4 mb-5 text-sm font-md">
-              <% if user_signed_in? && !current_user.buyer? %>
+              <% if user_signed_in? %>
                 <div class="flex-auto flex space-x-4 items-center">
-                  <%= link_to 'Show', auction_path(auction), class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white text-center' %>
-                </div>
-              <% else %>
-                <div class="flex-auto flex space-x-4">
-                  <%= button_to 'Bid Now', { action: 'bid_now', id: auction.id }, method: :post, class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white', remote: true %>
+                  <%= link_to (current_user.buyer? ? 'Bid' : 'Show'), auction_path(auction), class: 'h-10 px-6 font-semibold rounded-full bg-violet-600 text-white text-center' %>
                 </div>
               <% end %>
             </div>
-            <% if current_user && (current_user.seller?) %>
+            <% if current_user && current_user.seller? && auction.status == 'approved' && auction.end_time > Time.current %>
             <div class="flex-auto flex space-x-4">
-              <%= link_to 'Add Product',auction_path(auction), class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' %>
+              <%= render partial: "select_products_modal", locals: { auction: auction } %>
             </div>
           <% end %>
 

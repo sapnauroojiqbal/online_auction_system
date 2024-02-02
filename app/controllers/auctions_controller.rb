@@ -2,6 +2,7 @@ class AuctionsController < ApplicationController
   before_action :set_auction, except: %i[index new create]
     def index
       @auctions = Auction.all
+      @available_products = Product.where(user_id: current_user.id, status: "approved")
     end
 
     def new
@@ -9,6 +10,14 @@ class AuctionsController < ApplicationController
     end
 
     def show
+      @auction = Auction.find_by(id: params[:id])
+
+      if @auction
+        render 'show'
+      else
+        flash[:error] = 'Auction not found.'
+        redirect_to root_path  # Adjust the redirect path based on your application's needs
+      end
     end
 
     def create
@@ -46,6 +55,23 @@ class AuctionsController < ApplicationController
         flash[:danger] = 'Something went wrong'
       end
     end
+
+    # app/controllers/auctions_controller.rb
+def add_products_to_auction
+  @auction = Auction.find_by(id: params[:id])
+  @available_products = Product.where(user_id: current_user.id, status: "approved")
+end
+
+def assign_products_to_auction
+  @auction = Auction.find_by(id: params[:id])
+  selected_product_ids = params[:product][:product_ids]
+  selected_products = Product.where(id: selected_product_ids)
+
+  selected_products.update_all(auction_id: @auction.id)
+  @auction.products.update_all(status: Product.statuses[:live])
+
+  redirect_to auctions_path, notice: "Products added to auction successfully."
+ end
 
     private
 

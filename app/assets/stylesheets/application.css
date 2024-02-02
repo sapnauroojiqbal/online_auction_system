@@ -120,3 +120,8 @@ button:hover,
   font-weight: bold;
   color: #333;
 }
+.image-container{
+  height: 400px;
+  width: 400px;
+  height: auto;
+}

@@ -1,23 +1,30 @@
-<br />
 <div class="container">
   <div class="card">
-    <div class="card-header text-white bg-secondary ">
-      <p>
-        <strong>Auction: </strong>
-        <%= @auction.start_time  %>
-      </p>
-    </div>
+      <div class= 'card-header inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' style= 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);'>
+        <p>
+          <%= render "countdown", auction: @auction %>
+        </p>
+      </div>
     <div class="card-body text-black bg-light">
       <p>
-        <strong>Minimum bids </strong>
-        <%= @auction.minimum_bids %>
         <br />
+        <div class="grid-cols-1 sm:grid md:grid-cols-3 ">
+          <% @auction.products.each do |product| %>
+          <%= render partial:product, locals:{auction: @auction} %>
+            <% end %>
+          </div>
+        </div>
       </p>
       <% if current_user && (current_user.admin? || current_user.super_admin?) %>
       <%= link_to 'Edit', edit_auction_path(@auction), class:"btn btn-warning" %>
       <% end %>
       <br />
-      <%= link_to 'Back', auctions_path, class:"btn btn-secondary"  %>
+      <%= link_to 'Back', auctions_path, class:'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);'  %>
     </div>
   </div>
+  <% if current_user && current_user.seller? && @auction.status == 'live' && auction.end_time > Time.current %>
+  <div class="flex-auto flex space-x-4">
+    <%= link_to 'Add Products to Auction', add_products_to_auction_auction_path(@auction), class: 'btn btn-primary' %>
+  </div>
+<% end %>
 </div>

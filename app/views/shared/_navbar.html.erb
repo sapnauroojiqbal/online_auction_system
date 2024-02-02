@@ -10,6 +10,8 @@
       <%= link_to 'Home', root_path, class: "nav-link #{'underline' if current_page?(root_path)} text-gray-900 hover:text-black ml-5" %>
       <%= link_to 'Products', products_path, class: "nav-link #{'underline' if current_page?(products_path)} text-gray-900 hover:text-black" %>
       <%= render "shared/admin_nav" %>
+      <%= render "shared/buyer_nav" %>
+      <%= render "shared/seller_nav" %>
       <% if user_signed_in? %>
       <%= link_to user_path(current_user), class: "nav-link text-gray-900 hover:text-black" do %>
       <div class="flex items-center justify-center border-black border-1 shadow-md rounded-full w-14 h-14">

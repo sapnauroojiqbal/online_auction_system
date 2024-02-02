@@ -3,12 +3,14 @@ Rails.application.routes.draw do
   root 'welcome#index'
   authenticate :user do
     resources :users, only: [:show, :index, :destroy]
-    resources :auctions
     resources :auctions, except: [:index] do
       member do
         patch :change_status
+        get :add_products_to_auction
+        post :assign_products_to_auction
       end
     end
+
     resources :bids
     resources :products, except: [:index] do
       member do

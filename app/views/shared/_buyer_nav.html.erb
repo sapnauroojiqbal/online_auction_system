@@ -1,0 +1,3 @@
+<% if current_user && current_user.buyer? %>
+<%= link_to 'Live Auctions', auctions_path, class: "nav-link #{'underline' if current_page?(auctions_path)} text-gray-900 hover:text-black" %>
+<% end %>

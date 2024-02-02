@@ -33,11 +33,12 @@
 </div>
 </div>
 
+
 <%= render "images", form: form, product: @product %>
 <%= render "image_preview", form: form, product: @product %>
 
 
-  <div class="m-4">
+  <div class="mb-4">
     <%= form.submit "Save Product",  class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-full gradient-bg hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);' %>
   </div>
 <% end %>

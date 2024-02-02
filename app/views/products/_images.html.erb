@@ -5,14 +5,14 @@
     direct_upload: true,
     data: { previews_target: "input", action: "change->previews#preview" }, class: "inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full cursor-pointer hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md border-2 border-gray-400" %>
 
-  <div class="image-container">
+  <div class="image-container p-2">
     <% if product.images.attached? %>
       <% product.images.each do |image| %>
-        <%= image_tag image, data: { previews_target: "preview" }, class: "w-64 h-64" %>
-        <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
+        <%= image_tag image, data: { previews_target: "preview" } %>
+        <!-- <%= form.hidden_field :image_ids, multiple: true, value: image.signed_id %> -->
       <% end %>
     <% else %>
-      <%= image_tag "", data: { previews_target: "preview" }, class: "image" %>
+      <%= image_tag "", data: { previews_target: "preview" }, class: "rounded-md" %>
     <% end %>
   </div>
 </div>
