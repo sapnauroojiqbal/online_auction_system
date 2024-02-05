@@ -5,13 +5,15 @@ class Auction < ApplicationRecord
 
   enum status: { unapproved: "unapproved", approved: "approved", live: "live", ended: "ended", rejected: "rejected"}
 
+  after_update :update_status
 
   def update_status
-    if status == "approved" && start_time <= Time.current && end_time >= Time.current
-      update(status: 'live')
-    elsif end_time < Time.current
-      update(status: 'ended')
-      determine_winner_and_send_emails
+    if status == "ended"
+      products.each do |product|
+        if !product.sold_to_id
+          determine_winner_and_send_emails
+        end
+      end
     end
     broadcast_update
   end

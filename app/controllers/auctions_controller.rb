@@ -85,6 +85,6 @@ class AuctionsController < ApplicationController
     end
 
     def auction_params
-      params.require(:auction).permit(:start_time, :end_time, :minimum_bids, :user_id)
+      params.require(:auction).permit(:start_time, :end_time, :minimum_bids,:status, :user_id)
     end
 end

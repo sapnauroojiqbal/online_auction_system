@@ -1,9 +1,15 @@
 class ProductsController < ApplicationController
   before_action :authorize_resource, except: %i[index show create]
   before_action :set_product, except: %i[index new create]
-    def index
-      @products = Product.all
+  def index
+    if current_user.buyer?
+      @user_products = Product.where(:sold_to_id => current_user.id)
+    elsif current_user.seller?
+      @user_products = Product.where(:user_id => current_user.id)
+    else
     end
+    @products = Product.all
+  end
 
     def new
       @product = Product.new

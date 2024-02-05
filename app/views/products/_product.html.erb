@@ -1,3 +1,4 @@
+<% highest_bid = product.bids.maximum(:amount) %>
 <div class="mx-3 mt-6 flex flex-col rounded-lg bg-white dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0 shadow-lg">
   <% if product.preview_image.attached? %>
     <div class="aspect-w-16 aspect-h-9">
@@ -19,6 +20,17 @@
     <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
       <%= product.status %>
     </div>
+    <% if current_user && (current_user.admin? || current_user.super_admin?) %>
+      <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+        Added by - <%= product.user.first_name %> &nbsp<%= product.user.first_name %>
+      </div>
+    <% end %>
+    <% if current_user && product.sold_to_id? && ((current_user.seller? && product.user == current_user) ||(current_user.admin? || current_user.super_admin?)) %>
+    <% user_buyer = User.find(product.sold_to_id) %>
+    <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+      Sold to - <%= user_buyer.first_name  %> <%= user_buyer.last_name %> in  <%= number_to_currency(highest_bid) %>
+    </div>
+  <% end %>
     <div class="flex space-x-4 mb-5 text-sm font-md">
       <% if user_signed_in? %>
         <div class="flex-auto flex space-x-4">
@@ -61,7 +73,6 @@
         Auction ended and this product is not sold
       </p>
       <% else %>
-      <% highest_bid = product.bids.maximum(:amount) %>
       <% if highest_bid.present? && current_user.buyer? %>
         <% if auction.ended? %>
           <% if product.sold_to_id == current_user.id %>
@@ -88,7 +99,7 @@
         <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
           All Bids till now:
         </p>
-        <div class="flex gap-2">
+        <div class="grid-cols-1 sm:grid md:grid-cols-3">
           <% product.bids.each do |bid| %>
             <%= render bid %>
           <% end %>

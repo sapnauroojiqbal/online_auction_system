@@ -2,5 +2,6 @@
   controller: "countdown",
   countdown_target: "countdown",
   auction_start_time: auction.start_time.to_i * 1000,
-  auction_end_time: auction.end_time.to_i - Time.now.to_i
+  auction_end_time: auction.end_time.to_i - Time.now.to_i,
+  auction_id: auction.id
 }) %>

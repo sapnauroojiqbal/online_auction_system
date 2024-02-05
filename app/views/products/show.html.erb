@@ -1,24 +1,39 @@
+<% highest_bid = @product.bids.maximum(:amount) %>
 <br />
 <div class="flex mb-4">
   <div class="card">
-    <div class="card-header text-white bg-secondary ">
-      <p>
+    <div class= 'card-header inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' style= 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);'>
+      <h2 class="text-white">
         <strong>Product: </strong>
         <%= @product.name.upcase  %>
-      </p>
+      </h2>
     </div>
     <div class="card-body text-black bg-light">
     <% if @product.preview_image.attached? %>
     <%= image_tag(@product.preview_image, class: 'rounded-md w-64 h-64') %>
   <% end %>
-    <p>
+    <p class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
     <strong>Description: </strong>
     <%= @product.description  %>
   </p>
       <p>
-        <strong>Minimum bid amount: </strong>
-        <%= @product.minimum_bid_amount %>
-        <br />
+        <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
+          <%= @product.minimum_bid_amount %>$
+        </div>
+        <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+          <%= @product.status %>
+        </div>
+        <% if current_user && (current_user.admin? || current_user.super_admin?) %>
+          <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+            Added by - <%= @product.user.first_name %> &nbsp<%= @product.user.first_name %>
+          </div>
+        <% end %>
+        <% if current_user && @product.sold_to_id? && ((current_user.seller? && @product.user == current_user) ||(current_user.admin? || current_user.super_admin?)) %>
+        <% user_buyer = User.find(@product.sold_to_id) %>
+        <div class="w-full flex-none mt-2 order-1 text-xl text-slate-600">
+          Sold to - <%= user_buyer.first_name  %> <%= user_buyer.last_name %> in  <%= number_to_currency(highest_bid) %>
+        </div>
+      <% end %>
         <strong>Images:</strong>
         <div class="flex flex-row">
         <% @product.images.each do |image| %>
@@ -29,10 +44,12 @@
           </div>
       </p>
       <% if current_user && (current_user.id == @product.user_id || current_user.admin? || current_user.super_admin?) %>
-      <%= link_to 'Edit', edit_product_path(@product), class:"btn btn-warning" %>
+      <div class="flex-auto flex space-x-4 mt-2">
+        <%= link_to 'Edit', edit_product_path(@product),class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-color: #86E5E5;' %>
       <% end %>
+      <%= link_to 'Back', products_path, class:'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' %>
+      </div>
       <br />
-      <%= link_to 'Back', products_path, class:"btn btn-secondary"  %>
     </div>
   </div>
 </div>
