@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   belongs_to :sold_to, class_name: 'User', optional: true
   belongs_to :auction, optional: true
   has_one :review, dependent: :destroy
+  has_many :bids, dependent: :destroy
 
   enum status: { unapproved: "unapproved", approved: "approved",live: "live", sold: "sold", rejected: "rejected" , delivered: "delivered"}
 

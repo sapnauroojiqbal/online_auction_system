@@ -1,0 +1,25 @@
+<h1>Leave a Review</h1>
+
+<%= form_with(model: @review, url: reviews_path, remote: true) do |form| %>
+  <%= form.hidden_field :seller_id, value: @seller.id %>
+  <%= form.hidden_field :product_id, value: @product.id %>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :rating, "What's your overall rating?" %>
+      <div class="rating">
+        <%= form.collection_radio_buttons(:rating, [[5],[4],[3],[2],[1]], :first, :last) do |star| %>
+          <%= star.radio_button %>
+          <%= star.label(class: "text-white") %>
+        <% end %>
+      </div>
+    </div>
+
+  <div class="actions">
+    <%= form.submit 'Submit Review' %>
+  </div>
+<% end %>

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   authenticate :user do
     resources :users, only: [:show, :index, :destroy]
+    resources :reviews, only: [:new, :create]
     resources :auctions, except: [:index] do
       member do
         patch :change_status
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       patch :change_user_role
-      get :add_admin  # Use 'get' to show the form
+      get :add_admin
       post :create_admin
     end
   end

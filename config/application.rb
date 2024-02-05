@@ -2,6 +2,8 @@ require_relative "boot"
 
 require "rails/all"
 
+require 'cloudinary'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -25,8 +27,5 @@ module OnlineAuctionSystem
     config.time_zone = "Islamabad"
     config.active_record.default_timezone = :local
     # config.eager_load_paths << Rails.root.join("extras")
-
-
-
   end
 end

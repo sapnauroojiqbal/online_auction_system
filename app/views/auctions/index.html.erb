@@ -17,7 +17,9 @@
                 <%= auction.start_time %> - <%= auction.end_time %>
               </div>
               <div class="w-full flex-none mt-2 order-1 text-3xl font-bold text-violet-600">
+                <div id="auction_<%= auction.id %>">
                 <%= auction.status %>
+              </div>
               </div>
             </div>
 
@@ -39,8 +41,6 @@
             <div class="flex flex-row justify-between">
             <div class="flex-auto flex space-x-4">
               <%= button_to 'Delete',auction_path(auction), method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md',data: { confirm: 'Are you sure?' } %>
-            </div>
-            <div class="flex-auto flex space-x-4">
               <%= link_to 'Edit', edit_auction_path(auction), class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);',data: { confirm: 'Are you sure?' } %>
             </div>
             </div>

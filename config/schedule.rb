@@ -1,3 +1,5 @@
+set :output, "./log/cron.log"
+
 every 1.minute do
-  runner "AuctionEndingJob.perform_later"
+  rake "auctions:update_status"
 end

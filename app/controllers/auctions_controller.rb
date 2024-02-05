@@ -56,7 +56,6 @@ class AuctionsController < ApplicationController
       end
     end
 
-    # app/controllers/auctions_controller.rb
 def add_products_to_auction
   @auction = Auction.find_by(id: params[:id])
   @available_products = Product.where(user_id: current_user.id, status: "approved")

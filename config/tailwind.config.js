@@ -69,6 +69,10 @@ module.exports = {
         primary: [fontPrimary, fontPrimaryType],
         secondary: [fontSecondary, fontSecondaryType],
       },
+      gradientColorStops: theme => ({
+        'start': theme('#b1fcfc'),
+        'end': theme('#f2b0fc'),
+      }),
     },
   },
   plugins: [

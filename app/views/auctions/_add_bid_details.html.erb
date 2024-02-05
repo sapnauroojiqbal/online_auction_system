@@ -1,6 +1,5 @@
 <div data-controller="dialog" data-action="click->dialog#clickOutside">
   <button data-action="click->dialog#open" class="inline-flex justify-center items-center py-3 px-5 text-base font-md text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md">Add Bid</button>
-
   <dialog data-dialog-target="modal" class="backdrop:bg-gray-400 backdrop:bg-opacity-90 z-10 rounded-md border-4 bg-sky-900 w-full md:w-2/3 mt-24">
     <div class="p-8">
       <button class="bg-slate-400" data-action="dialog#close">
@@ -35,8 +34,6 @@
           <%= submit_tag "Add Bid", class: 'btn btn-primary' %>
         <% end %>
       </div>
-
-
         <button type="button" data-action="dialog#close">Cancel</button>
 
     </div>

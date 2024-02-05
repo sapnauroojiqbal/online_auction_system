@@ -1,0 +1,15 @@
+<% highest_bid = product.bids.maximum(:amount) %>
+
+<%= form_with model: Bid, local: true do |form| %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :product_id, value: product.id %>
+
+  <% if highest_bid.present? %>
+    <%= form.hidden_field :amount, value: highest_bid %>
+  <% else %>
+    <% minimum_bid_amount = product.minimum_bid_amount + 10 %>
+    <%= form.hidden_field :amount, value: minimum_bid_amount %>
+  <% end %>
+
+  <%= submit_tag "Auto Bid", class: "inline-flex justify-center items-center py-3 px-5 text-base font-md text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md" %>
+<% end %>

@@ -41,9 +41,15 @@
         </div>
         <div class="flex space-x-4 mb-5 text-sm font-md">
           <% if user_signed_in? %>
+            <% if current_user.buyer? %>
+            <div class="flex-auto flex space-x-4 items-center">
+              <%= link_to 'Bid now', auction_path(product.auction), class:"inline-flex justify-center items-center py-3 px-5 m-3 text-base font-md text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md" %>
+            </div>
+            <% else %>
             <div class="flex-auto flex space-x-4 items-center">
               <%= link_to 'Show', product_path(product), class:"inline-flex justify-center items-center py-3 px-5 m-3 text-base font-md text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md" %>
             </div>
+            <% end %>
           <% end %>
         </div>
       </div>
