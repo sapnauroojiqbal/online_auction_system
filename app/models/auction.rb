@@ -15,12 +15,12 @@ class Auction < ApplicationRecord
         end
       end
     end
-    broadcast_update
+    # broadcast_update
   end
 
-  def broadcast_update
-    ActionCable.server.broadcast("auctions_channel", { auction_id: id, status: status })
-  end
+  # def broadcast_update
+  #   ActionCable.server.broadcast("auctions_channel", { auction_id: id, status: status })
+  # end
 
   def determine_winner_and_send_emails
     products.each do |product|

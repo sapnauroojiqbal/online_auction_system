@@ -1,7 +1,7 @@
 <div data-controller="dialog" data-action="click->dialog#clickOutside">
   <button data-action="click->dialog#open" class="inline-flex justify-center items-center py-3 px-5 text-base font-md text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md">Add Product</button>
 
-  <dialog data-dialog-target="modal" class="backdrop:bg-gray-400 backdrop:bg-opacity-90 z-10 rounded-md border-4 bg-sky-900 w-full md:w-2/3 mt-24">
+  <dialog data-dialog-target="modal" class="backdrop:bg-gray-400 backdrop:bg-opacity-90 z-10 rounded-md border-4 bg-[#86E5E5] w-full md:w-2/3 mt-24">
     <div class="p-8">
       <button class="bg-slate-400" data-action="dialog#close">
         <svg
@@ -27,7 +27,7 @@
           <label for="product_ids">Select Products:</label>
           <%= collection_check_boxes(:product, :product_ids, @available_products, :id, :name) %>
 
-          <%= submit_tag "Add Selected Products", class: 'btn btn-primary' %>
+          <%= submit_tag "Add Selected Products",  class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-full gradient-bg hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);' %>
           <% else %>
           <p>You don't have any product to added for auction</p>
           <% end %>
@@ -35,7 +35,7 @@
       </div>
 
       <form data-action="submit->dialog#addProduct">
-        <button type="button" data-action="dialog#close">Cancel</button>
+        <button type="button" data-action="dialog#close" class='inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md' style= 'background-color: #F2B0FC;'>Cancel</button>
       </form>
     </div>
   </dialog>

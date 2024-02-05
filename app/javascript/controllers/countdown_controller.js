@@ -6,7 +6,8 @@ export default class extends Controller {
   connect() {
     console.log("Connected to countdown controller");
 
-    this.timeToStartAuction = this.countdownTarget.dataset.auctionStartTime;
+    this.timeToStartAuction = this.countdownTarget.dataset.auctionStartTime / 1000;
+
     this.secondsUntilEnd = this.countdownTarget.dataset.auctionEndTime;
 
     const now = new Date().getTime();
@@ -51,6 +52,14 @@ export default class extends Controller {
   async updateAuctionStatus(status) {
     const auctionId = this.countdownTarget.dataset.auctionId;
 
+    if (status == "live" && this.countdownTarget.dataset.auctionStatus == "live") {
+      return;
+    }
+
+    if (status == "ended" && this.countdownTarget.dataset.auctionStatus == "ended") {
+      return;
+    }
+
     try {
       const response = await fetch(`/auctions/${auctionId}`, {
         method: "PATCH",
@@ -63,7 +72,7 @@ export default class extends Controller {
       });
 
       if (!response.ok) {
-        console.log(response)
+        console.log(response);
         throw new Error("Failed to update auction status");
       }
     } catch (error) {

@@ -10,12 +10,14 @@ class Ability
       can :manage, Product, user_id: user.id
       can :create, Auction
       can :read, Auction
-      can :add_products_to_auction, Auction, user_id: user.id
+      can :manage, Auction, user_id: user.id
       can :read, Review
     elsif user.buyer?
       can :read, Product
       can :bid, Product
       can :create, Bid
+      can :read, Bid
+      can :manage, Bid
       can :read, Auction
       can :manage, Review, buyer_id: user.id
     end

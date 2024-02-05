@@ -1,11 +1,11 @@
 <div class="flex flex-row justify-between">
-  <h2>Your products</h2>
   <% if current_user && current_user.seller? %>
   <%= link_to 'Add a new product', new_product_path, class: 'inline-flex justify-center items-center py-3 px-5 mt-4 text-base font-md text-center text-white rounded-full gradient-bg hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);' %>
 <% end %>
 </div>
 
 <% if current_user && !(current_user.admin? || current_user.super_admin?) %>
+<h2>Your products</h2>
 <br />
 <div class="grid-cols-1 sm:grid md:grid-cols-3 ">
   <% @user_products .each do |product| %>

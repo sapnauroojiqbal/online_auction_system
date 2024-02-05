@@ -15,6 +15,7 @@ gem "devise"
 gem 'mini_mime'
 gem 'font-awesome-sass'
 gem 'cancancan'
+gem 'validates_timeliness', '~> 7.0.0.beta1'
 # gem "redis", ">= 4.0.1"
 # gem "kredis"
 # gem "bcrypt", "~> 3.1.7"

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   authenticate :user do
     resources :users, only: [:show, :index, :destroy]
     resources :reviews, only: [:new, :create]
-    resources :auctions, except: [:index] do
+    resources :auctions do
       member do
         patch :change_status
         get :add_products_to_auction
@@ -13,15 +13,12 @@ Rails.application.routes.draw do
     end
 
     resources :bids
-    resources :products, except: [:index] do
+    resources :products do
       member do
         patch :change_status
       end
     end
   end
-
-  resources :products, only: [:index]
-  resources :auctions, only: [:index]
 
   resources :users do
     member do

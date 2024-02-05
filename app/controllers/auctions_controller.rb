@@ -1,5 +1,4 @@
 class AuctionsController < ApplicationController
-  before_action :authorize_resource, except: %i[index show create]
   before_action :set_auction, except: %i[index new create]
     def index
       @auctions = Auction.all
