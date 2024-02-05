@@ -14,6 +14,7 @@ gem "jbuilder"
 gem "devise"
 gem 'mini_mime'
 gem 'font-awesome-sass'
+gem 'cancancan'
 # gem "redis", ">= 4.0.1"
 # gem "kredis"
 # gem "bcrypt", "~> 3.1.7"

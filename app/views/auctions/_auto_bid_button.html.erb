@@ -1,11 +1,21 @@
 <% highest_bid = product.bids.maximum(:amount) %>
 
-<%= form_with model: Bid, local: true do |form| %>
+<%= form_with model: @bid, local: true do |form| %>
+<% if @bid && @bid.errors.any? %>
+        <div class="mt-4">
+          <strong class="text-red-600">There were some errors with your submission:</strong>
+          <ul class="list-disc list-inside text-red-600">
+            <% @bid.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+  <% end %>
   <%= form.hidden_field :user_id, value: current_user.id %>
   <%= form.hidden_field :product_id, value: product.id %>
 
   <% if highest_bid.present? %>
-    <%= form.hidden_field :amount, value: highest_bid %>
+    <%= form.hidden_field :amount, value: highest_bid + 10 %>
   <% else %>
     <% minimum_bid_amount = product.minimum_bid_amount + 10 %>
     <%= form.hidden_field :amount, value: minimum_bid_amount %>

@@ -1,4 +1,5 @@
 class AuctionsController < ApplicationController
+  before_action :authorize_resource, except: %i[index show create]
   before_action :set_auction, except: %i[index new create]
     def index
       @auctions = Auction.all
@@ -56,23 +57,27 @@ class AuctionsController < ApplicationController
       end
     end
 
-def add_products_to_auction
-  @auction = Auction.find_by(id: params[:id])
-  @available_products = Product.where(user_id: current_user.id, status: "approved")
-end
+    def add_products_to_auction
+      @auction = Auction.find_by(id: params[:id])
+      @available_products = Product.where(user_id: current_user.id, status: "approved")
+    end
 
-def assign_products_to_auction
-  @auction = Auction.find_by(id: params[:id])
-  selected_product_ids = params[:product][:product_ids]
-  selected_products = Product.where(id: selected_product_ids)
+    def assign_products_to_auction
+      @auction = Auction.find_by(id: params[:id])
+      selected_product_ids = params[:product][:product_ids]
+      selected_products = Product.where(id: selected_product_ids)
 
-  selected_products.update_all(auction_id: @auction.id)
-  @auction.products.update_all(status: Product.statuses[:live])
+      selected_products.update_all(auction_id: @auction.id)
+      @auction.products.update_all(status: Product.statuses[:live])
 
-  redirect_to auctions_path, notice: "Products added to auction successfully."
- end
+      redirect_to auctions_path, notice: "Products added to auction successfully."
+    end
 
     private
+
+    def authorize_resource
+      authorize! params[:action.to_sym], Auction
+    end
 
     def set_auction
       @auction = Auction.find_by(id: params[:id])

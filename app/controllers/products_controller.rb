@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :authorize_resource, except: %i[index show create]
   before_action :set_product, except: %i[index new create]
     def index
       @products = Product.all
@@ -48,6 +49,10 @@ class ProductsController < ApplicationController
     end
 
     private
+
+    def authorize_resource
+      authorize! params[:action.to_sym], Product
+    end
 
     def set_product
       @product = Product.find_by(id: params[:id])

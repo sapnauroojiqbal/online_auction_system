@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  before_action :authorize_resource, except: %i[create]
   before_action :authenticate_user!
 
   def new
@@ -20,6 +21,10 @@ class ReviewsController < ApplicationController
   end
 
   private
+
+  def authorize_resource
+    authorize! params[:action.to_sym], Review
+  end
 
   def review_params
     params.require(:review).permit(:content, :rating, :seller_id, :product_id).merge(
