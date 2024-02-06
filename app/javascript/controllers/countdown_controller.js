@@ -61,7 +61,7 @@ export default class extends Controller {
     }
 
     try {
-      const response = await fetch(`/auctions/${auctionId}`, {
+      const response = await fetch(`/auctions/${auctionId}/change_status`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

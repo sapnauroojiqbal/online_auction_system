@@ -16,7 +16,7 @@ class AuctionsController < ApplicationController
         render 'show'
       else
         flash[:error] = 'Auction not found.'
-        redirect_to root_path  # Adjust the redirect path based on your application's needs
+        redirect_to root_path
       end
     end
 
@@ -50,8 +50,10 @@ class AuctionsController < ApplicationController
 
     def change_status
       if @auction.update(status: params[:status])
+      render json: { message: 'Status updated successfully.' }, status: :ok
       redirect_to auctions_path, notice: 'Status updated successfully.'
       else
+        render json: { error: 'Something went wrong' }, status: :unprocessable_entity
         flash[:danger] = 'Something went wrong'
       end
     end
@@ -73,10 +75,6 @@ class AuctionsController < ApplicationController
     end
 
     private
-
-    def authorize_resource
-      authorize! params[:action.to_sym], Auction
-    end
 
     def set_auction
       @auction = Auction.find_by(id: params[:id])

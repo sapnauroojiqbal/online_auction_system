@@ -10,9 +10,10 @@ class Product < ApplicationRecord
   has_many_attached :images, dependent: :destroy
   has_one_attached :preview_image, dependent: :destroy
 
-  validates_presence_of :name, :description, :minimum_bid_amount, :preview_image, :images
+  validates_presence_of :name, :description, :preview_image, :images
   validate :image_type
   validate :correct_image_type
+  validates :minimum_bid_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def image_type
     if images.attached? == false
