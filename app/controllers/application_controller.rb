@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -7,10 +8,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound do |_exception|
     redirect_to root_path, 404, alert: I18n.t('errors.record_not_found')
-  end
-
-  def not_found_method
-    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
   add_flash_types :info, :error, :warning

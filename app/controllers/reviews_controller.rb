@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authorize_resource
 
   def new
     @review = Review.new
@@ -20,6 +21,9 @@ class ReviewsController < ApplicationController
   end
 
   private
+  def authorize_resource
+    authorize! params[:action.to_sym], Product
+  end
 
   def review_params
     params.permit(:content, :rating, :seller_id, :product_id).merge(buyer_id: current_user.id)

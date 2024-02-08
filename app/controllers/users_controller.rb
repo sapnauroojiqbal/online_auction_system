@@ -1,8 +1,5 @@
 # frozen_string_literal: true
-
-# User controller for admin to manage users
 class UsersController < ApplicationController
-  # before_action :logged_in_user, only: %i[edi update]
   before_action :authorized_user, only: %i[destroy index]
 
   def index

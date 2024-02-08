@@ -1,4 +1,6 @@
+# frozen_string_literal: true
 class BidsController < ApplicationController
+  before_action :authorize_resource
   before_action :set_bid, except: %i[index new create]
     def index
       @bids = Bid.all
@@ -40,6 +42,10 @@ class BidsController < ApplicationController
     end
 
     private
+
+    def authorize_resource
+      authorize! params[:action.to_sym], Bid
+    end
 
     def set_bid
       @bid = Bid.find_by(id: params[:id])

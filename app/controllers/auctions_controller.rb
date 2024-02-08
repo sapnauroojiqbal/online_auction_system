@@ -1,4 +1,6 @@
+# frozen_string_literal: true
 class AuctionsController < ApplicationController
+  before_action :authorize_resource, except:%i[index show]
   before_action :set_auction, except: %i[index new create]
   before_action :available_products, only: %i[index show assign_products_to_auction]
 
@@ -55,7 +57,6 @@ class AuctionsController < ApplicationController
     def change_status
       if @auction.update(status: params[:status])
       render json: { message: 'Status updated successfully.' }, status: :ok
-      redirect_to auctions_path, notice: 'Status updated successfully.'
       else
         render json: { error: @auction.errors.full_messages.join }
         flash.now[:danger] = @auction.errors.full_messages.join('<br>')
@@ -75,6 +76,10 @@ class AuctionsController < ApplicationController
     end
 
     private
+
+    def authorize_resource
+      authorize! params[:action.to_sym], Auction
+    end
 
     def set_auction
       @auction = Auction.find_by(id: params[:id])
