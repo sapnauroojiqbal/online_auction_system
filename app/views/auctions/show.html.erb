@@ -24,9 +24,9 @@
       <br />
     </div>
   </div>
-  <% if current_user && current_user.seller? && @auction.status == 'live' && auction.end_time > Time.current %>
-  <div class="flex-auto flex space-x-4">
-    <%= link_to 'Add Products to Auction', add_products_to_auction_auction_path(@auction), class: 'btn btn-primary' %>
-  </div>
-<% end %>
+  <% if current_user && current_user.seller? && (@auction.status == 'approved' || @auction.status == 'live') && @auction.end_time > Time.current %>
+    <div class="flex-auto flex space-x-4">
+      <%= render partial: "select_products_modal",locals:{auction: @auction}   %>
+    </div>
+  <% end %>
 </div>

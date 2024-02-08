@@ -16,8 +16,14 @@
 <br />
 <h2>All Products</h2>
 <div class="grid-cols-1 sm:grid md:grid-cols-3 ">
+  <% if @products.present? %>
   <% @products.each do |product| %>
     <%= render product %>
   <% end %>
+  <% else %>
+      <div class="flex justify-center items-center h-48">
+        <p class="text-xl font-medium text-gray-500">No products available at the moment.</p>
+      </div>
+    <% end %>
 </div>
 

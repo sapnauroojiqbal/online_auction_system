@@ -23,7 +23,7 @@
         <h1>Add Products to Auction</h1>
 
         <%= form_tag(assign_products_to_auction_auction_path(auction), method: :post) do %>
-        <% if @available_products.length > 0 %>
+        <% if @available_products.present? %>
           <label for="product_ids">Select Products:</label>
           <%= collection_check_boxes(:product, :product_ids, @available_products, :id, :name) %>
 

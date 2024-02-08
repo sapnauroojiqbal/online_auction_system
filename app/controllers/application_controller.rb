@@ -5,6 +5,16 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: exception.message
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |_exception|
+    redirect_to root_path, 404, alert: I18n.t('errors.record_not_found')
+  end
+
+  def not_found_method
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
+  end
+
+  add_flash_types :info, :error, :warning
+
   protected
 
   def configure_permitted_parameters

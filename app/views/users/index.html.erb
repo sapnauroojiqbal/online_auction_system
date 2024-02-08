@@ -1,51 +1,56 @@
 <% if current_user.admin? || current_user.super_admin? %>
-<br />
-<h1>All Users</h1>
-<br />
-<table class="table">
-  <thead class="thead-dark">
-    <th>Full Name</th>
-    <th>Email</th>
-    <th>Profile Pic</th>
-    <th>User Role</th>
-    <% if current_user.super_admin? %>
-    <th></th>
-    <% end %>
-    <th></th>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-    <tr>
-      <td><%= user.first_name%> &nbsp<%= user.last_name%></td>
-      <td><%= user.email %></td>
-      <td><% if user.avatar.attached? %>
-        <%= image_tag(user.avatar, class: 'rounded-circle w-16 w-16') if user.avatar.attached? %>
-        <% end %> </td>
-        <td><%= user.user_type %></td>
-      <td>
+  <% if @users.present? %>
+  <br />
+  <h1>All Users</h1>
+  <br />
+  <table class="table">
+    <thead class="thead-dark">
+      <th>Full Name</th>
+      <th>Email</th>
+      <th>Profile Pic</th>
+      <th>User Role</th>
       <% if current_user.super_admin? %>
-      <div class="flex-auto flex space-x-4">
-      <%= button_to 'Remove', user,
-      method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-color: #F2B0FC;',data: { confirm: 'Are you sure?' } %>
-    </div>
-        <% end %>
-      </td>
-      <td>
-      <div>
-      <%= form_with url: change_user_role_user_path(user), method: :patch, remote: true do |f| %>
-        <%= select_tag :user_type,
-                       options_for_select([['Buyer', 'buyer'], ['Seller', 'seller'], ['Admin', 'admin']], selected: user.user_type),
-                       onchange: 'this.form.submit()', class: 'form-select my-1' %>
+      <th></th>
       <% end %>
+      <th></th>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+      <tr>
+        <td><%= user.first_name%> &nbsp<%= user.last_name%></td>
+        <td><%= user.email %></td>
+        <td><% if user.avatar.attached? %>
+          <%= image_tag(user.avatar, class: 'rounded-circle w-16 w-16') if user.avatar.attached? %>
+          <% end %> </td>
+          <td><%= user.user_type %></td>
+        <td>
+        <% if current_user.super_admin? %>
+        <div class="flex-auto flex space-x-4">
+        <%= button_to 'Remove', user,
+        method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-color: #F2B0FC;',data: { confirm: 'Are you sure?' } %>
+      </div>
+          <% end %>
+        </td>
+        <td>
+        <div>
+        <%= form_with url: change_user_role_user_path(user), method: :patch, remote: true do |f| %>
+          <%= select_tag :user_type,
+                        options_for_select([['Buyer', 'buyer'], ['Seller', 'seller'], ['Admin', 'admin']], selected: user.user_type),
+                        onchange: 'this.form.submit()', class: 'form-select my-1' %>
+        <% end %>
 
-    </div>
-    </td>
-    </tr>
-    <% end %>
-</table>
-<br />
-
-<% if current_user.super_admin? %>
-  <%= link_to 'Add Admin', add_admin_user_path(current_user), class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);' %>
-<% end %>
+      </div>
+      </td>
+      </tr>
+      <% end %>
+  </table>
+  <br />
+  <% else %>
+  <div class="flex justify-center items-center h-48">
+    <p class="text-xl font-medium text-gray-500">No user available at the moment.</p>
+  </div>
+  <% end %>
+  <% if current_user.super_admin? %>
+    <%= link_to 'Add Admin', add_admin_user_path(current_user), class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-image: linear-gradient(to right, #b1fcfc, #f2b0fc);' %>
+  <% end %>
 <% end %>

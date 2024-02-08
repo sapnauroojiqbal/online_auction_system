@@ -20,21 +20,21 @@
     <div class="field">
         <%= f.label :first_name, class:"block text-sm leading-6 text-gray-900 font-bold mt-2" %>
         <div class="mt-2">
-        <%= f.text_field :first_name, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        <%= f.text_field :first_name, required:true,class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
       </div>
         </div>
 
       <div class="field">
         <%= f.label :last_name, class:"block text-sm leading-6 text-gray-900 font-bold mt-2" %>
         <div class="mt-2">
-        <%= f.text_field :last_name, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        <%= f.text_field :last_name,required:true, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
       </div>
         </div>
 
       <div class="field">
         <%= f.label :email, class:"block text-sm leading-6 text-gray-900 font-bold mt-2" %>
         <div class="mt-2">
-        <%= f.email_field :email, autofocus: true, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        <%= f.email_field :email,required:true, autofocus: true, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
       </div>
       </div>
 
@@ -57,14 +57,14 @@
       <div class="field">
         <%= f.label :phone_number, class:"block text-sm leading-6 text-gray-900 font-bold mt-2" %>
         <div class="mt-2">
-        <%= f.text_field :phone_number, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        <%= f.text_field :phone_number,required:true, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
     </div>
         </div>
 
         <div class="field">
         <%= f.label :address, class:"block text-sm leading-6 text-gray-900 font-bold mt-2" %>
         <div class="mt-2">
-        <%= f.text_field :address, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        <%= f.text_field :address,required:true, class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
         </div>
         </div>
 
@@ -73,14 +73,14 @@
       <div class="field">
         <%= f.label :password, class:"block text-sm leading-6 text-gray-900 font-bold mt-2" %>
         <div class="mt-2">
-        <%= f.password_field :password, autocomplete: "off", class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        <%= f.password_field :password, required:true,autocomplete: "off", class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
       </div>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation,class:"block text-sm leading-6 text-gray-900 font-bold mt-2" %>
         <div class="mt-2">
-        <%= f.password_field :password_confirmation, autocomplete: "off", class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        <%= f.password_field :password_confirmation, required:true,autocomplete: "off", class:"block w-full rounded-full border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
         </div>
         </div>
         <div class="mt-2">

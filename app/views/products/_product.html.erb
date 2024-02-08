@@ -41,7 +41,7 @@
 
     <div class="flex space-x-4 mb-5 text-sm font-md">
       <div class="flex flex-col justify-between">
-      <% if current_user && (current_user.id == product.user_id || current_user.admin? || current_user.super_admin?) && !product.sold_to_id? %>
+      <% if current_user && (current_user.id == product.user_id || current_user.admin? || current_user.super_admin?) && !product.sold_to_id? && !product.live? %>
         <div class="flex flex-row justify-between">
           <div class="flex-auto flex space-x-4">
             <%= button_to 'Delete', product_path(product), method: :delete, class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md', style: 'background-color: #F2B0FC;', data: { confirm: 'Are you sure?' } %>
@@ -112,9 +112,9 @@
       <% end %>
       <% end %>
       <% if product.sold_to_id == current_user.id && !product.review.present? %>
-         <%= link_to 'Leave a Review', new_review_path(seller_id: product.user_id, product_id: product.id),class: 'inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full border border-gray-300 bg-#F2B0FC focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md',  style: 'background-color: #86E5E5;' %>
+      <%= render partial: "reviews/review_form", locals: { product: product } %>
      <% elsif product.review.present? %>
-     <%= render partial: "rating", locals: { product: product } %>
+     <%= render partial: "reviews/rating", locals: { product: product } %>
      <% else %>
      <div></div>
     <% end %>

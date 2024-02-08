@@ -4,7 +4,6 @@ class AuctionsChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-  
   end
 
 end

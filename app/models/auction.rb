@@ -5,7 +5,22 @@ class Auction < ApplicationRecord
 
   enum status: { unapproved: "unapproved", approved: "approved", live: "live", ended: "ended", rejected: "rejected"}
 
+  validates :start_time, presence: true
+  validates :end_time, presence: true
+  validates :minimum_bids, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
+  validate :end_time_after_start_time
+
   after_update :update_status
+
+  private
+
+  def end_time_after_start_time
+    return unless start_time && end_time
+
+    if start_time >= end_time
+      errors.add(:end_time, "must be after the start time")
+    end
+  end
 
   def update_status
     if status == "ended"

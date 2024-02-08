@@ -5,10 +5,12 @@ export default class extends Controller {
 
   connect() {
     this.modalTarget.addEventListener("close", this.enableBodyScroll.bind(this))
+    this.modalTarget.addEventListener("closeReview", this.enableBodyScroll.bind(this))
   }
 
   disconnect() {
     this.modalTarget.removeEventListener("close", this.enableBodyScroll.bind(this))
+    this.modalTarget.removeEventListener("closeReview", this.enableBodyScroll.bind(this))
   }
 
   open() {
@@ -17,6 +19,15 @@ export default class extends Controller {
   }
 
   close() {
+    this.modalTarget.close()
+  }
+
+  openReview() {
+    this.modalTarget.showModal()
+    document.body.classList.add('overflow-hidden')
+  }
+
+  closeReview() {
     this.modalTarget.close()
   }
 

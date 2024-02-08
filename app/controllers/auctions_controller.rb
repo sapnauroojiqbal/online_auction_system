@@ -1,8 +1,9 @@
 class AuctionsController < ApplicationController
   before_action :set_auction, except: %i[index new create]
+  before_action :available_products, only: %i[index show assign_products_to_auction]
+
     def index
       @auctions = Auction.all
-      @available_products = Product.where(user_id: current_user.id, status: "approved")
     end
 
     def new
@@ -10,12 +11,10 @@ class AuctionsController < ApplicationController
     end
 
     def show
-      @auction = Auction.find_by(id: params[:id])
-
       if @auction
         render 'show'
       else
-        flash[:error] = 'Auction not found.'
+        flash.now[:error] = @auction.errors.full_messages.join('<br>')
         redirect_to root_path
       end
     end
@@ -25,15 +24,18 @@ class AuctionsController < ApplicationController
       if @auction.save
         redirect_to auctions_path, notice: 'auction was successfully created.'
       else
-        render :new
+        redirect_to auctions_path
+        flash.now[:alert] = @auction.errors.full_messages.join('<br>')
       end
     end
 
     def destroy
       if @auction.destroy
-        redirect_to auctions_path, notice: 'Auction Deleted Successfully'
+        redirect_to auctions_path
+        flash.now[:notice]= 'Auction Deleted Successfully'
       else
-        redirect_to auctions_path, alert: 'Auction not Deleted'
+        redirect_to auctions_path
+        flash.now[:alert] =@auction.errors.full_messages.join('<br>')
       end
     end
 
@@ -42,9 +44,11 @@ class AuctionsController < ApplicationController
 
     def update
       if @auction.update(auction_params)
-        redirect_to auction_path(@auction), notice: 'Auction successfully updated!'
+        flash.now[:notice] = 'Auction successfully updated!'
+        redirect_to auction_path(@auction)
       else
-        render 'edit', alert: 'Auction not updated!'
+        flas.now[:alert] = @auction.errors.full_messages.join('<br>')
+        render 'edit'
       end
     end
 
@@ -53,14 +57,9 @@ class AuctionsController < ApplicationController
       render json: { message: 'Status updated successfully.' }, status: :ok
       redirect_to auctions_path, notice: 'Status updated successfully.'
       else
-        render json: { error: 'Something went wrong' }, status: :unprocessable_entity
-        flash[:danger] = 'Something went wrong'
+        render json: { error: @auction.errors.full_messages.join }
+        flash.now[:danger] = @auction.errors.full_messages.join('<br>')
       end
-    end
-
-    def add_products_to_auction
-      @auction = Auction.find_by(id: params[:id])
-      @available_products = Product.where(user_id: current_user.id, status: "approved")
     end
 
     def assign_products_to_auction
@@ -71,7 +70,8 @@ class AuctionsController < ApplicationController
       selected_products.update_all(auction_id: @auction.id)
       @auction.products.update_all(status: Product.statuses[:live])
 
-      redirect_to auctions_path, notice: "Products added to auction successfully."
+      redirect_to auctions_path
+       flash.now[:notice]= "Products added to auction successfully."
     end
 
     private
@@ -79,6 +79,10 @@ class AuctionsController < ApplicationController
     def set_auction
       @auction = Auction.find_by(id: params[:id])
       redirect_to auctions_path, alert: 'Auction Not Found' if @auction.nil?
+    end
+
+    def available_products
+      @available_products = Product.where(user_id: current_user.id, status: "approved")
     end
 
     def auction_params

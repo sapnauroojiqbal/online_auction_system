@@ -87,5 +87,5 @@ Rails.application.configure do
     user_name: Rails.application.credentials[Rails.env.to_sym][:user_name],
     password: Rails.application.credentials[Rails.env.to_sym][:password]
   }
-  # config.active_storage.service = :cloudinary
+  config.active_storage.service = :cloudinary
 end

@@ -2,6 +2,8 @@
   <%= form.label :avatar, class: "block text-sm leading-6 text-gray-900 font-bold mt-2"  %>
   <%= form.file_field :avatar,
     direct_upload: true,
+    required:true,
+    accept: ".jpg,.jpeg,.png,",
     data: { previews_target: "input", action: "change->previews#preview" },class:"inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full cursor-pointer hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md border-2 border-gray-400" %>
   <div class="image-container">
     <% if user.avatar.attached? %>

@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.where.not(id: current_user.id).where.not(user_type: :super_admin)
-    redirect_to root_url, alert: 'No records found' if @users.empty?
   end
 
   def show
@@ -30,7 +29,8 @@ class UsersController < ApplicationController
         UserMailer.with(user: @user, password: params[:user][:password]).welcome_email.deliver_now
         redirect_to users_path, notice: 'User was successfully created.'
       else
-        render :add_admin, alert: 'Something went wrong'
+        flash.now[:alert] = @user.errors.full_messages.join("<br/>")
+        render :add_admin
       end
     else
       redirect_to users_path, alert: 'Unauthorized: Only super admin can create admin users.'
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   def change_user_role
       @user = User.find_by(id: params[:id])
       @user.update(user_type: params[:user_type])
-      flash[:success] = 'Role updated successfully.'
+      flash.now[:success] = 'Role updated successfully.'
   end
 
   def destroy

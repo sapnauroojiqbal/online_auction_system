@@ -7,7 +7,6 @@ Rails.application.routes.draw do
     resources :auctions do
       member do
         patch :change_status
-        get :add_products_to_auction
         post :assign_products_to_auction
       end
     end
@@ -27,4 +26,6 @@ Rails.application.routes.draw do
       post :create_admin
     end
   end
+
+  match '*unmatched', to: 'application#not_found_method', via: :all
 end
