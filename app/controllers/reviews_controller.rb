@@ -22,7 +22,7 @@ class ReviewsController < ApplicationController
 
   private
   def authorize_resource
-    authorize! params[:action.to_sym], Product
+    authorize! params[:action.to_sym], Review
   end
 
   def review_params

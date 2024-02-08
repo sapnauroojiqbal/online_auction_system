@@ -19,7 +19,7 @@ class Ability
       can :read, Bid
       can :manage, Bid
       can :read, Auction
-      can :manage, Review, buyer_id: user.id
+      can :manage, Review, user_id: user.id
     end
   end
 end
