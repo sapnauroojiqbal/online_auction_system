@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ReviewsController < ApplicationController
   before_action :authorize_resource
 
@@ -21,6 +22,7 @@ class ReviewsController < ApplicationController
   end
 
   private
+
   def authorize_resource
     authorize! params[:action.to_sym], Review
   end
@@ -28,5 +30,4 @@ class ReviewsController < ApplicationController
   def review_params
     params.permit(:content, :rating, :seller_id, :product_id).merge(buyer_id: current_user.id)
   end
-
 end

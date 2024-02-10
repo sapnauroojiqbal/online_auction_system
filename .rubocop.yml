@@ -10,12 +10,11 @@ AllCops:
   TargetRailsVersion: 5.2
   Exclude:
     - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'config/**/*'
     - 'node_modules/**/*'
     - 'vendor/bundle/**/*'
     - 'bin/**/*'
-
-Layout/LineLength:
-  Max: 120
 
 Layout/LineLength:
   Max: 120

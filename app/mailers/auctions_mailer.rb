@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AuctionsMailer < ApplicationMailer
   def winner_email(user, auction)
     @user = user
@@ -11,5 +13,4 @@ class AuctionsMailer < ApplicationMailer
     loser_emails = @users.map(&:email)
     mail(to: loser_emails, subject: 'Better luck next time!')
   end
-  
 end

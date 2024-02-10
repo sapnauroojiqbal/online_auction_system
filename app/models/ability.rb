@@ -1,9 +1,9 @@
 # frozen_string_literal: true
+
 class Ability
   include CanCan::Ability
 
   def initialize(user)
-
     if user.admin? || user.super_admin?
       can :manage, :all
     elsif user.seller?
@@ -23,4 +23,3 @@ class Ability
     end
   end
 end
-

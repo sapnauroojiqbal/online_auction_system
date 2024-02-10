@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/xxxxxxxxxx_update_users.rb
 class UpdateUsers < ActiveRecord::Migration[7.0]
   def change
@@ -12,4 +14,3 @@ class UpdateUsers < ActiveRecord::Migration[7.0]
     add_column :users, :gender, :string
   end
 end
-

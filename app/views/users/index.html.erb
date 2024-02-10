@@ -20,7 +20,9 @@
         <td><%= user.first_name%> &nbsp<%= user.last_name%></td>
         <td><%= user.email %></td>
         <td><% if user.avatar.attached? %>
-          <%= image_tag(user.avatar, class: 'rounded-circle w-16 w-16') if user.avatar.attached? %>
+          <div class="flex items-center justify-center border-black border-1 shadow-md rounded-full w-14 h-14 overflow-hidden">
+            <%= image_tag(user.avatar, class: 'rounded-full object-cover w-full h-full') if user.avatar.attached? %>
+          </div>
           <% end %> </td>
           <td><%= user.user_type %></td>
         <td>

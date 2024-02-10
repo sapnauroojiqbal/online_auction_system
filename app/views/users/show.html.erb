@@ -8,7 +8,7 @@
           </div>
           <div class="flex items-center mb-4">
             <div class="flex-shrink-0">
-              <%= image_tag(current_user.avatar, class: 'rounded-full w-48 h-48') if current_user.avatar.attached? %>
+              <%= image_tag(current_user.avatar, class: 'rounded-full object-cover w-48 h-48') if current_user.avatar.attached? %>
             </div>
           </div>
           <hr class="my-4">

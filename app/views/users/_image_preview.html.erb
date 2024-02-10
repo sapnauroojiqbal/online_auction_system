@@ -7,7 +7,7 @@
     data: { previews_target: "input", action: "change->previews#preview" },class:"inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-full cursor-pointer hover:border-black hover:border-solid hover:bg-white hover:text-black shadow-md border-2 border-gray-400" %>
   <div class="image-container">
     <% if user.avatar.attached? %>
-      <%= image_tag user.avatar, data: { previews_target: "preview" }, class: "w-16 h-16" %>
+      <%= image_tag user.avatar, data: { previews_target: "preview" }, class: "w-16 h-16 rounded-full object-cover" %>
     <% else %>
       <%= image_tag "", data: { previews_target: "preview" }, class: "image" %>
     <% end %>

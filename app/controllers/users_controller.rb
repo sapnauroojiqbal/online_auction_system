@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :authorized_user, only: %i[destroy index]
 
@@ -15,7 +16,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def  add_admin
+  def add_admin
     @user = User.new
   end
 
@@ -26,7 +27,7 @@ class UsersController < ApplicationController
         UserMailer.with(user: @user, password: params[:user][:password]).welcome_email.deliver_now
         redirect_to users_path, notice: 'User was successfully created.'
       else
-        flash.now[:alert] = @user.errors.full_messages.join("<br/>")
+        flash.now[:alert] = @user.errors.full_messages.join('<br/>')
         render :add_admin
       end
     else
@@ -35,9 +36,9 @@ class UsersController < ApplicationController
   end
 
   def change_user_role
-      @user = User.find_by(id: params[:id])
-      @user.update(user_type: params[:user_type])
-      flash.now[:success] = 'Role updated successfully.'
+    @user = User.find_by(id: params[:id])
+    @user.update(user_type: params[:user_type])
+    flash.now[:success] = 'Role updated successfully.'
   end
 
   def destroy
@@ -65,12 +66,13 @@ class UsersController < ApplicationController
   end
 
   def authorized_user
-    unless current_user.admin? || current_user.super_admin?
-      redirect_to root_url, alert: 'Unauthorized: Only admin is authorized for this action.'
-    end
+    return if current_user.admin? || current_user.super_admin?
+
+    redirect_to root_url, alert: 'Unauthorized: Only admin is authorized for this action.'
   end
 
   def admin_params
-    params.require(:user).permit(:email, :password,  :current_password,:avatar, :first_name, :last_name, :phone_number, :address, :gender, :user_type)
+    params.require(:user).permit(:email, :password, :current_password, :avatar, :first_name, :last_name, :phone_number,
+                                 :address, :gender, :user_type)
   end
 end

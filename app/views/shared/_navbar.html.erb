@@ -6,7 +6,7 @@
   <%= link_to root_path do %>
     <img src="<%= asset_path('icons-auction-100.png') %>" alt="logo">
   <% end %>
-</div>
+  </div>
       <%= link_to 'Home', root_path, class: "nav-link #{'underline' if current_page?(root_path)} text-gray-900 hover:text-black ml-5" %>
       <%= link_to 'Products', products_path, class: "nav-link #{'underline' if current_page?(products_path)} text-gray-900 hover:text-black" %>
       <%= render "shared/admin_nav" %>
@@ -14,14 +14,12 @@
       <%= render "shared/seller_nav" %>
       <% if user_signed_in? %>
       <%= link_to user_path(current_user), class: "nav-link text-gray-900 hover:text-black" do %>
-      <div class="flex items-center justify-center border-black border-1 shadow-md rounded-full w-14 h-14">
-        <div class="container">
-            <% if current_user.avatar.attached? %>
-              <%= image_tag(current_user.avatar, class: 'rounded-full') %>
-            <% end %>
-            </div>
-            </div>
-            <% end %>
+      <div class="flex items-center justify-center border-black border-1 shadow-md rounded-full w-14 h-14 overflow-hidden">
+        <% if current_user.avatar.attached? %>
+          <%= image_tag(current_user.avatar, class: 'rounded-full object-cover w-full h-full') %>
+        <% end %>
+      </div>
+    <% end %>
 
       <div class="flex font-md">
         <div class="flex-auto flex space-x-4">

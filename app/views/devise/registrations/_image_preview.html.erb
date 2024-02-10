@@ -9,7 +9,7 @@
       <% if user.new_record? %>
         <%= image_tag "", data: { previews_target: "preview" }, class: "image" %>
       <% elsif user.avatar.attached? && user.avatar.signed_id.present? %>
-        <%= image_tag Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true), data: { previews_target: "preview" }, class: "w-16 h-16" %>
+        <%= image_tag Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true), data: { previews_target: "preview" }, class: "rounded-full object-cover w-16 h-16" %>
       <% else %>
         <%= image_tag "", data: { previews_target: "preview" }, class: "image" %>
       <% end %>

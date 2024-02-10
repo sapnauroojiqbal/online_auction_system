@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_for :users
   root 'welcome#index'
   authenticate :user do
-    resources :users, only: [:show, :index, :destroy]
-    resources :reviews, only: [:new, :create]
+    resources :users, only: %i[show index destroy]
+    resources :reviews, only: %i[new create]
     resources :auctions do
       member do
         patch :change_status
@@ -26,5 +28,4 @@ Rails.application.routes.draw do
       post :create_admin
     end
   end
-
 end
